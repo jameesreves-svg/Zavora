@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Support Requests</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Customer Support Requests</h2>
+
+    <div id="requests">Loading requests...</div>
+
+    <button onclick="loadRequests()">Refresh Requests</button>
+    <br><br>
+
+    <button onclick="location.href='index.html'">
+        Back to Dashboard
+    </button>
+
+    <script>
+        function loadRequests() {
+
+            let requests = JSON.parse(
+                localStorage.getItem("zavoraSupport") || "[]"
+            );
+
+            let container = document.getElementById("requests");
+            container.innerHTML = "";
+
+            if (requests.length === 0) {
+                container.textContent = "No support requests yet";
+                return;
+            }
+
+            requests.forEach(function(request, index) {
+
+                if (!request.status) {
+                    request.status = "Pending";
+                }
+
+                let card = document.createElement("div");
+
+                let title = document.createElement("h3");
+                title.textContent = "Request #" + (index + 1);
+
+                let details = document.createElement("p");
+                details.textContent =
+                    "Name: " + request.name +
+                    " | Email: " + request.email +
+                    " | Subject: " + request.subject +
+                    " | Message: " + request.message +
+                    " | Date: " + request.date;
+
+                let status = document.createElement("h3");
+                status.textContent = "Status: " + request.status;
+
+                card.appendChild(title);
+                card.appendChild(details);
+                card.appendChild(status);
+
+                if (request.status === "Pending") {
+
+                    let button = document.createElement("button");
+                    button.textContent = "Mark as Resolved";
+
+                    button.onclick = function() {
+                        requests[index].status = "Resolved";
+
+                        localStorage.setItem(
+                            "zavoraSupport",
+                            JSON.stringify(requests)
+                        );
+
+                        loadRequests();
+                    };
+
+                    card.appendChild(button);
+                }
+
+                container.appendChild(card);
+            });
+
+            localStorage.setItem(
+                "zavoraSupport",
+                JSON.stringify(requests)
+            );
+        }
+
+        loadRequests();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,54 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Notifications</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Notifications Management</h2>
+
+    <h3>Send Notification</h3>
+
+    <p>Notification Title</p>
+    <input type="text" id="title" placeholder="Enter title">
+
+    <br><br>
+
+    <p>Message</p>
+    <input type="text" id="message" placeholder="Enter message">
+
+    <br><br>
+
+    <button onclick="sendNotification()">Send Notification</button>
+
+    <h3>Recent Notifications</h3>
+
+    <p>Welcome to Zavora</p>
+    <p>Your wallet is ready</p>
+    <p>New card application received</p>
+
+    <br><br>
+
+    <button onclick="location.href='index.html'">
+        Back to Dashboard
+    </button>
+
+    <script>
+        function sendNotification() {
+            let title = document.getElementById("title").value;
+            let message = document.getElementById("message").value;
+
+            if (title === "" || message === "") {
+                alert("Please enter title and message");
+            } else {
+                alert("Notification Demo: " + title + " - " + message);
+            }
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Owner Login</h2>
+
+    <p>Email Address</p>
+    <input type="email" id="email" placeholder="Enter your email">
+
+    <br><br>
+
+    <p>Password</p>
+    <input type="password" id="password" placeholder="Enter password">
+
+    <br><br>
+
+    <button onclick="login()">Login</button>
+
+    <script>
+        function login() {
+            let email = document.getElementById("email").value;
+            let password = document.getElementById("password").value;
+
+            if (email === "admin@zavora.com" && password === "123456") {
+                alert("Demo Login Successful");
+                window.location.href = "index.html";
+            } else {
+                alert("Incorrect email or password");
+            }
+        }
+    </script>
+
+</body>
+</html>

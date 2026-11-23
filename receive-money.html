@@ -1,0 +1,86 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Receive Money</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Receive Money</h2>
+
+    <h3>Your Wallet Details</h3>
+
+    <p>Account Name: Zavora Customer</p>
+    <p>Wallet ID: ZV001234</p>
+    <p>Wallet Email: customer@example.com</p>
+
+    <h3>Receive Instructions</h3>
+    <p>Share your Wallet ID or email with the sender.</p>
+
+    <br>
+
+    <button onclick="alert('Wallet ID copied: ZV001234')">
+        Copy Wallet ID
+    </button>
+
+    <h3>Record Demo Received Money</h3>
+
+    <p>Sender Email</p>
+    <input type="email" id="sender" placeholder="Enter sender email">
+
+    <br><br>
+
+    <p>Amount in USD</p>
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <br><br>
+
+    <button onclick="receiveMoney()">Confirm Received</button>
+
+    <br><br>
+
+    <button onclick="location.href='1customer-home.html'">
+        Back to Wallet
+    </button>
+
+    <script>
+        function receiveMoney() {
+
+            let sender = document.getElementById("sender").value.trim();
+            let amount = Number(document.getElementById("amount").value);
+
+            if (sender === "" || !sender.includes("@") || amount <= 0) {
+                alert("Please enter valid details");
+                return;
+            }
+
+            let transactions = JSON.parse(
+                localStorage.getItem("zavoraTransactions") || "[]"
+            );
+
+            transactions.push({
+                id: "ZV" + Date.now(),
+                type: "Money Received",
+                sender: sender,
+                amount: amount,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                status: "Pending"
+            });
+
+            localStorage.setItem(
+                "zavoraTransactions",
+                JSON.stringify(transactions)
+            );
+
+            alert("Demo receive request saved successfully!");
+
+            location.href = "transactions.html";
+        }
+    </script>
+
+</body>
+</html>

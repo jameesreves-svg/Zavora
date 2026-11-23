@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Send Money</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Send Money</h2>
+
+    <p>Receiver Email</p>
+    <input type="email" id="receiver" placeholder="Enter receiver email">
+
+    <br><br>
+
+    <p>Amount in USD</p>
+    <input type="number" id="amount" placeholder="Enter amount">
+
+    <br><br>
+
+    <button onclick="sendMoney()">Continue</button>
+
+    <br><br>
+
+    <button onclick="location.href='1customer-home.html'">
+        Back to Wallet
+    </button>
+
+    <script>
+        function sendMoney() {
+
+            let receiver = document.getElementById("receiver").value.trim();
+            let amount = Number(document.getElementById("amount").value);
+
+            if (receiver === "" || !receiver.includes("@") || amount <= 0) {
+                alert("Please enter valid details");
+                return;
+            }
+
+            let transactions = JSON.parse(
+                localStorage.getItem("zavoraTransactions") || "[]"
+            );
+
+            transactions.push({
+                id: "ZV" + Date.now(),
+                type: "Money Sent",
+                receiver: receiver,
+                amount: amount,
+                date: new Date().toLocaleDateString(),
+                time: new Date().toLocaleTimeString(),
+                status: "Pending"
+            });
+
+            localStorage.setItem(
+                "zavoraTransactions",
+                JSON.stringify(transactions)
+            );
+
+            alert("Demo transfer request saved successfully!");
+
+            location.href = "transactions.html";
+        }
+    </script>
+
+</body>
+</html>

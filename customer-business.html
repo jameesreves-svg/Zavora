@@ -1,0 +1,98 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Business Account</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Business Account</h2>
+
+    <h3>My Business</h3>
+
+    <p>Business Name</p>
+    <input type="text" id="businessName" placeholder="Enter business name">
+
+    <br><br>
+
+    <p>Business Email</p>
+    <input type="email" id="businessEmail" placeholder="Enter business email">
+
+    <br><br>
+
+    <p>Business Type</p>
+    <select id="businessType">
+        <option value="">Select business type</option>
+        <option>Online Store</option>
+        <option>Restaurant</option>
+        <option>Shop</option>
+        <option>Other</option>
+    </select>
+
+    <br><br>
+
+    <button onclick="saveBusiness()">Save Business Details</button>
+
+    <hr>
+
+    <h3>Saved Business Details</h3>
+
+    <p id="savedDetails">No business details saved yet</p>
+
+    <br>
+
+    <button onclick="location.href='1customer-home.html'">
+        Back to Wallet
+    </button>
+
+    <script>
+        function loadBusiness() {
+            let business = JSON.parse(
+                localStorage.getItem("zavoraBusiness") || "null"
+            );
+
+            if (business) {
+                document.getElementById("businessName").value = business.name;
+                document.getElementById("businessEmail").value = business.email;
+                document.getElementById("businessType").value = business.type;
+
+                document.getElementById("savedDetails").textContent =
+                    "Business: " + business.name +
+                    " | Email: " + business.email +
+                    " | Type: " + business.type;
+            }
+        }
+
+        function saveBusiness() {
+            let name = document.getElementById("businessName").value.trim();
+            let email = document.getElementById("businessEmail").value.trim();
+            let type = document.getElementById("businessType").value;
+
+            if (name === "" || !email.includes("@") || type === "") {
+                alert("Please enter all business details");
+                return;
+            }
+
+            let business = {
+                name: name,
+                email: email,
+                type: type
+            };
+
+            localStorage.setItem(
+                "zavoraBusiness",
+                JSON.stringify(business)
+            );
+
+            alert("Demo business details saved!");
+            loadBusiness();
+        }
+
+        loadBusiness();
+    </script>
+
+</body>
+</html>

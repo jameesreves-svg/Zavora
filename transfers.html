@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Transactions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>Transaction History</h2>
+
+    <div id="transactionList">
+        Loading transactions...
+    </div>
+
+    <br>
+
+    <button onclick="location.href='customer-home.html'">
+        Back to Wallet
+    </button>
+
+    <script>
+        function loadTransactions() {
+
+            let transactions = JSON.parse(
+                localStorage.getItem("zavoraTransactions") || "[]"
+            );
+
+            let container = document.getElementById("transactionList");
+            container.innerHTML = "";
+
+            if (transactions.length === 0) {
+                container.textContent = "No transactions yet";
+                return;
+            }
+
+            transactions.slice().reverse().forEach(function(transaction, index) {
+
+                let originalIndex = transactions.length - 1 - index;
+
+                let card = document.createElement("div");
+
+                let details = document.createElement("p");
+
+                details.textContent =
+                    "Transaction ID: " + transaction.id +
+                    " | Type: " + transaction.type +
+                    " | Sender: " + (transaction.sender || "N/A") +
+                    " | Receiver: " + (transaction.receiver || "N/A") +
+                    " | Amount: $" + transaction.amount +
+                    " | Date: " + transaction.date +
+                    " | Time: " + transaction.time;
+
+                let status = document.createElement("h3");
+                status.textContent = "Status: " + transaction.status;
+
+                let select = document.createElement("select");
+
+                ["Pending", "Completed", "Rejected"].forEach(function(value) {
+                    let option = document.createElement("option");
+                    option.value = value;
+                    option.textContent = value;
+
+                    if (transaction.status === value) {
+                        option.selected = true;
+                    }
+
+                    select.appendChild(option);
+                });
+
+                let button = document.createElement("button");
+                button.textContent = "Update Status";
+
+                button.onclick = function() {
+
+                    transactions[originalIndex].status = select.value;
+
+                    localStorage.setItem(
+                        "zavoraTransactions",
+                        JSON.stringify(transactions)
+                    );
+
+                    alert("Transaction status updated!");
+                    loadTransactions();
+                };
+
+                card.appendChild(details);
+                card.appendChild(status);
+                card.appendChild(select);
+                card.appendChild(document.createElement("br"));
+                card.appendChild(button);
+
+                container.appendChild(card);
+                container.appendChild(document.createElement("hr"));
+            });
+        }
+
+        loadTransactions();
+    </script>
+
+</body>
+</html>

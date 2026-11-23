@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora My Savings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>My Savings</h2>
+
+    <h3>Total Savings</h3>
+    <h1 id="savings">$0.00</h1>
+
+    <p>Demo Savings Account</p>
+    <p>Status: Active Demo</p>
+
+    <hr>
+
+    <h3>Add Demo Savings</h3>
+
+    <input type="number" id="amount" placeholder="Enter amount in USD">
+
+    <br><br>
+
+    <button onclick="addSavings()">Add Savings</button>
+
+    <br><br>
+
+    <button onclick="location.href='1customer-home.html'">
+        Back to Wallet
+    </button>
+
+    <script>
+        function showSavings() {
+            let total = Number(localStorage.getItem("zavoraSavings") || 0);
+
+            document.getElementById("savings").textContent =
+                "$" + total.toFixed(2);
+        }
+
+        function addSavings() {
+            let amount = Number(document.getElementById("amount").value);
+
+            if (amount <= 0) {
+                alert("Please enter a valid amount");
+                return;
+            }
+
+            let total = Number(localStorage.getItem("zavoraSavings") || 0);
+
+            total += amount;
+
+            localStorage.setItem("zavoraSavings", total);
+
+            document.getElementById("amount").value = "";
+
+            showSavings();
+
+            alert("Demo savings updated successfully!");
+        }
+
+        showSavings();
+    </script>
+
+</body>
+</html>

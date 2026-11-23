@@ -1,0 +1,88 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zavora Customer Wallet</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <h1>ZAVORA</h1>
+    <h2>My Wallet</h2>
+
+    <h3>Available Balance</h3>
+    <h1 id="balance">$0.00</h1>
+
+    <p id="received">Total Received: $0.00</p>
+    <p id="sent">Total Sent: $0.00</p>
+
+    <hr>
+
+    <h2>Wallet Services</h2>
+
+    <button onclick="location.href='send-money.html'">Send Money</button>
+    <br><br>
+
+    <button onclick="location.href='receive-money.html'">Receive Money</button>
+    <br><br>
+
+    <button onclick="location.href='transactions.html'">Transaction History</button>
+    <br><br>
+
+    <button onclick="location.href='customer-cards.html'">My Cards</button>
+    <br><br>
+
+    <button onclick="location.href='customer-savings.html'">My Savings</button>
+    <br><br>
+
+    <button onclick="location.href='customer-business.html'">Business Account</button>
+    <br><br>
+
+    <button onclick="location.href='profile.html'">My Profile</button>
+    <br><br>
+
+    <button onclick="location.href='change-password.html'">Change Password</button>
+    <br><br>
+
+    <button onclick="location.href='support.html'">Help & Support</button>
+
+    <script>
+        function updateBalance() {
+
+            let transactions = JSON.parse(
+                localStorage.getItem("zavoraTransactions") || "[]"
+            );
+
+            let received = 0;
+            let sent = 0;
+
+            transactions.forEach(function(transaction) {
+
+                if (transaction.status === "Completed") {
+
+                    if (transaction.type === "Money Received") {
+                        received += Number(transaction.amount);
+                    }
+
+                    if (transaction.type === "Money Sent") {
+                        sent += Number(transaction.amount);
+                    }
+                }
+            });
+
+            document.getElementById("balance").textContent =
+                "$" + (received - sent).toFixed(2);
+
+            document.getElementById("received").textContent =
+                "Total Received: $" + received.toFixed(2);
+
+            document.getElementById("sent").textContent =
+                "Total Sent: $" + sent.toFixed(2);
+        }
+
+        updateBalance();
+    </script>
+
+</body>
+</html>
