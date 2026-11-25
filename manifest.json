@@ -9,5 +9,16 @@
   "background_color": "#07130F",
   "theme_color": "#07130F",
   "orientation": "portrait",
-  "icons": []
+  "icons": [
+    {
+      "src": "zavora-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "zavora-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
