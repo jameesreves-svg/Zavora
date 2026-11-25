@@ -1,0 +1,13 @@
+{
+  "id": "/Zavora/",
+  "name": "Zavora Global",
+  "short_name": "Zavora",
+  "description": "One Wallet. One World.",
+  "start_url": "/Zavora/",
+  "scope": "/Zavora/",
+  "display": "standalone",
+  "background_color": "#07130F",
+  "theme_color": "#07130F",
+  "orientation": "portrait",
+  "icons": []
+}
